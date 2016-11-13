@@ -1,6 +1,6 @@
 import csv, math, numpy as np
 
-fname = "E:\\Users\\Tom\\Google Drive\\Studium - Informatik\\Machine Learning\\Übung\\02_homework_dataset.csv"
+fname = "..\\..\\Google Drive\\Studium - Informatik\\Machine Learning\\Übung\\02_homework_dataset.csv"
 dataset = [[], [], [], []]
 with(open(fname)) as f:
     content = csv.reader(f)
