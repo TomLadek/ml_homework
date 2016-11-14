@@ -1,0 +1,11 @@
+Q1:
+It justifies the parameter choice, based on the observed data and simplifies the calculation of conditional probability on the parameter.
+
+Q2:
+MLE is prefered only when there is sufficient amount of data to base the estimate on. In other cases, MAP is used, which makes up for lack of data by subtituting some beliefs about the random process.
+
+Q3:
+With enough data, the "substituted beliefs" from MAP don't matter anymore as the estimate is based on actual observation.
+
+Q4:
+It is mathematically more correct due to the usage of all of the available data instead of some attributes of it (e.g. the extremum).
