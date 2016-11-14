@@ -23,11 +23,7 @@ dataset_size = len(dataset[3])
 z1 = 0
 z2 = 1
 z3 = 2
-
-gini0 = 1 - math.pow(dataset[3].count(z1) / dataset_size, 2) - math.pow(dataset[3].count(z2) / dataset_size, 2) \
-        - math.pow(dataset[3].count(z3) / dataset_size, 2)
-print(gini0)
-
+delta = dict()
 
 def sum_of_class_given_split_on_feature(z, split, feature, comp, this_dataset):
     this_dataset_size = len(this_dataset[0])
@@ -41,109 +37,125 @@ def lte(a, b):
 def gt(a, b):
     return a > b
 
-delta0 = dict()
-for i in np.arange(0, 10, 0.1):
-    sum_z1_i_x1_l = sum_of_class_given_split_on_feature(z1, i, 0, lte, dataset)
-    sum_z2_i_x1_l = sum_of_class_given_split_on_feature(z2, i, 0, lte, dataset)
-    sum_z3_i_x1_l = sum_of_class_given_split_on_feature(z3, i, 0, lte, dataset)
-    sum_z1_i_x1_r = sum_of_class_given_split_on_feature(z1, i, 0, gt, dataset)
-    sum_z2_i_x1_r = sum_of_class_given_split_on_feature(z2, i, 0, gt, dataset)
-    sum_z3_i_x1_r = sum_of_class_given_split_on_feature(z3, i, 0, gt, dataset)
-    gini1_l = 1 \
-              - math.pow(sum_z1_i_x1_l / dataset_size, 2) \
-              - math.pow(sum_z2_i_x1_l / dataset_size, 2) \
-              - math.pow(sum_z3_i_x1_l / dataset_size, 2)
-    gini1_r = 1 \
-              - math.pow(sum_z1_i_x1_r / dataset_size, 2) \
-              - math.pow(sum_z2_i_x1_r / dataset_size, 2) \
-              - math.pow(sum_z3_i_x1_r / dataset_size, 2)
 
-    d = gini0 - ((sum_z1_i_x1_l + sum_z2_i_x1_l + sum_z3_i_x1_l) / dataset_size) * gini1_l \
-        - ((sum_z1_i_x1_r + sum_z2_i_x1_r + sum_z3_i_x1_r) / dataset_size) * gini1_r
-    delta0[d] = i
-    print("split=" + str(i) + " gini0_l=" + str(gini1_l) + " gini0_r=" + str(gini1_r) + " delta0=" + str(d)
-          + " [" + str(z1) + "'s (l): " + str(sum_z1_i_x1_l) + " ; " + str(z2) + "'s (l): " + str(sum_z2_i_x1_l) + " ; " + str(z3) + "'s (l): " + str(sum_z3_i_x1_l)
-          + " | " + str(z1) + "'s (r): " + str(sum_z1_i_x1_r) + " ; " + str(z2) + "'s (r): " + str(sum_z2_i_x1_r) + " ; " + str(z3) + "'s (r): " + str(sum_z3_i_x1_r) + "]")
+def chose_split_by_deltas(deltas_dict):
+    curr_max = 0
+    chosen_split = -1
+    for d_entry in deltas_dict:
+        print(str(deltas_dict[d_entry]) + ": " + str(d_entry))
+        if math.fabs(d_entry) >= curr_max:
+            chosen_split = deltas_dict[d_entry]
+            curr_max = math.fabs(d_entry)
+    return [chosen_split, curr_max]
 
-curr_max = 0
-chosen_split0 = 0
-for d_entry in delta0:
-    print(str(delta0[d_entry]) + ": " + str(d_entry))
-    if math.fabs(d_entry) >= curr_max:
-        chosen_split0 = delta0[d_entry]
-        curr_max = math.fabs(d_entry)
 
-print("chosen split on lvl 0: " + str(chosen_split0))
+def test_split_for_feature(feature, dataset, gini):
+    dataset_size = len(dataset[0])
+    for i in np.arange(-0.6, 10, 0.1):
+        sum_z1_i_l = sum_of_class_given_split_on_feature(z1, i, feature, lte, dataset)
+        sum_z2_i_l = sum_of_class_given_split_on_feature(z2, i, feature, lte, dataset)
+        sum_z3_i_l = sum_of_class_given_split_on_feature(z3, i, feature, lte, dataset)
+        sum_z1_i_r = sum_of_class_given_split_on_feature(z1, i, feature, gt, dataset)
+        sum_z2_i_r = sum_of_class_given_split_on_feature(z2, i, feature, gt, dataset)
+        sum_z3_i_r = sum_of_class_given_split_on_feature(z3, i, feature, gt, dataset)
+        dataset_sizel = sum_z1_i_l + sum_z2_i_l + sum_z3_i_l
+        dataset_sizer = sum_z1_i_r + sum_z2_i_r + sum_z3_i_r
+        if dataset_sizel == 0 or dataset_sizer == 0:
+            continue
+        gini_l = 1 \
+                  - math.pow(sum_z1_i_l / dataset_sizel, 2) \
+                  - math.pow(sum_z2_i_l / dataset_sizel, 2) \
+                  - math.pow(sum_z3_i_l / dataset_sizel, 2)
+        gini_r = 1 \
+                  - math.pow(sum_z1_i_r / dataset_sizer, 2) \
+                  - math.pow(sum_z2_i_r / dataset_sizer, 2) \
+                  - math.pow(sum_z3_i_r / dataset_sizer, 2)
+
+        d = gini - ((sum_z1_i_l + sum_z2_i_l + sum_z3_i_l) / dataset_size) * gini_l \
+            - ((sum_z1_i_r + sum_z2_i_r + sum_z3_i_r) / dataset_size) * gini_r
+        delta[d] = i
+        print("split=" + str(i) + " gini0_l=" + str(gini_l) + " gini0_r=" + str(gini_r) + " delta0=" + str(d)
+              + " [" + str(z1) + "'s (l): " + str(sum_z1_i_l) + " ; " + str(z2) + "'s (l): " + str(sum_z2_i_l) + " ; " + str(z3) + "'s (l): " + str(sum_z3_i_l)
+              + " | " + str(z1) + "'s (r): " + str(sum_z1_i_r) + " ; " + str(z2) + "'s (r): " + str(sum_z2_i_r) + " ; " + str(z3) + "'s (r): " + str(sum_z3_i_r) + "]")
+    return delta
+
+gini0 = 1 - math.pow(dataset[3].count(z1) / dataset_size, 2) - math.pow(dataset[3].count(z2) / dataset_size, 2) \
+        - math.pow(dataset[3].count(z3) / dataset_size, 2)
+print("gini 0: " + str(gini0))
+
+feature_to_split_on = -1
+split_and_max_delta = [-1, 0]
+chosen_feature = -1
+# depth 0 -> 1 
+for f in range(0,3):
+    delta.clear()
+    d_dict = test_split_for_feature(f, dataset, gini0)
+    split_and_max = chose_split_by_deltas(d_dict)
+    if split_and_max[1] > split_and_max_delta[1]:
+        split_and_max_delta = split_and_max
+        chosen_feature = f
+
+print("split_and_max_delta=" + str(split_and_max_delta))
+print("chosen_feature=" + str(chosen_feature))
 
 dataset1l = [[],[],[],[]]
 dataset1r = [[],[],[],[]]
 for i in range(dataset_size):
-    if dataset[0][i] <= chosen_split0:
+    if dataset[0][i] <= split_and_max_delta[0]:
         for j in range(0,4):
             dataset1l[j].append(dataset[j][i])
     else:
         for j in range(0,4):
             dataset1r[j].append(dataset[j][i])
 
-print("l tree lvl 1: " + str(dataset1l))
+print("l tree lvl 1: " + str(dataset1l)) # -> pure node, no split needed for l2!
 print("r tree lvl 1: " + str(dataset1r))
 
 dataset_size1l = len(dataset1l[0])
-delta1l = dict()
 gini1l = 1 - math.pow(dataset1l[3].count(z1) / dataset_size1l, 2) - math.pow(dataset1l[3].count(z2) / dataset_size1l, 2) \
-        - math.pow(dataset1l[3].count(z3) / dataset_size1l, 2)
-for i in np.arange(0, 5.2, 0.1):
-    sum_z1_i_x2_l = sum_of_class_given_split_on_feature(z1, i, 2, lte, dataset1l)
-    sum_z2_i_x2_l = sum_of_class_given_split_on_feature(z2, i, 2, lte, dataset1l)
-    sum_z3_i_x2_l = sum_of_class_given_split_on_feature(z3, i, 2, lte, dataset1l)
-    sum_z1_i_x2_r = sum_of_class_given_split_on_feature(z1, i, 2, gt, dataset1l)
-    sum_z2_i_x2_r = sum_of_class_given_split_on_feature(z2, i, 2, gt, dataset1l)
-    sum_z3_i_x2_r = sum_of_class_given_split_on_feature(z3, i, 2, gt, dataset1l)
-    gini2_l = 1 \
-              - math.pow(sum_z1_i_x2_l / dataset_size1l, 2) \
-              - math.pow(sum_z2_i_x2_l / dataset_size1l, 2) \
-              - math.pow(sum_z3_i_x2_l / dataset_size1l, 2)
-    gini2_r = 1 \
-              - math.pow(sum_z1_i_x2_r / dataset_size1l, 2) \
-              - math.pow(sum_z2_i_x2_r / dataset_size1l, 2) \
-              - math.pow(sum_z3_i_x2_r / dataset_size1l, 2)
+          - math.pow(dataset1l[3].count(z3) / dataset_size1l, 2)
+print("gini 1l: " + str(gini1l))
 
-    d = gini1l - ((sum_z1_i_x2_l + sum_z2_i_x2_l + sum_z3_i_x2_l) / dataset_size1l) * gini2_l \
-        - ((sum_z1_i_x2_r + sum_z2_i_x2_r + sum_z3_i_x2_r) / dataset_size1l) * gini2_r
-    delta1l[d] = i
-    print("split=" + str(i) + " gini2_l=" + str(gini2_l) + " gini2_r=" + str(gini2_r) + " delta1l=" + str(d)
-          + " [" + str(z1) + "'s (l): " + str(sum_z1_i_x2_l) + " ; " + str(z2) + "'s (l): " + str(sum_z2_i_x2_l) + " ; " + str(z3) + "'s (l): " + str(sum_z3_i_x2_l)
-          + " | " + str(z1) + "'s (r): " + str(sum_z1_i_x2_r) + " ; " + str(z2) + "'s (r): " + str(sum_z2_i_x2_r) + " ; " + str(z3) + "'s (r): " + str(sum_z3_i_x2_r) + "]")
+dataset_size1r = len(dataset1r[0])
+gini1r = 1 - math.pow(dataset1r[3].count(z1) / dataset_size1r, 2) - math.pow(dataset1r[3].count(z2) / dataset_size1r, 2) \
+          - math.pow(dataset1r[3].count(z3) / dataset_size1r, 2)
+print("gini 1r: " + str(gini1r))
 
-curr_max = 0
-chosen_split1 = 0
-for d_entry in delta1l:
-    print(str(delta1l[d_entry]) + ": " + str(d_entry))
-    if math.fabs(d_entry) >= curr_max:
-        chosen_split1 = delta1l[d_entry]
-        curr_max = math.fabs(d_entry)
+dataset = dataset1r
+dataset_size = len(dataset[0])
+split_and_max_delta = [-1, 0]
+chosen_feature = -1
+# depth 1 -> 2
+for f in range(0,3):
+    delta.clear()
+    d_dict = test_split_for_feature(f, dataset, gini1r)
+    split_and_max = chose_split_by_deltas(d_dict)
+    if split_and_max[1] > split_and_max_delta[1]:
+        split_and_max_delta = split_and_max
+        chosen_feature = f
 
-print("chosen split on lvl 1l: " + str(chosen_split1))
+print("split_and_max_delta=" + str(split_and_max_delta))
+print("chosen_feature=" + str(chosen_feature))
 
-dataset2ll = [[],[],[],[]]
-dataset2lr = [[],[],[],[]]
-for i in range(dataset_size1l):
-    if dataset1l[2][i] <= chosen_split1:
+dataset2rl = [[],[],[],[]]
+dataset2rr = [[],[],[],[]]
+for i in range(dataset_size):
+    if dataset[0][i] <= split_and_max_delta[0]:
         for j in range(0,4):
-            dataset2ll[j].append(dataset1l[j][i])
+            dataset2rl[j].append(dataset[j][i])
     else:
         for j in range(0,4):
-            dataset2lr[j].append(dataset1l[j][i])
+            dataset2rr[j].append(dataset[j][i])
 
-print("ll tree lvl 2: " + str(dataset2ll))
-print("lr tree lvl 2: " + str(dataset2lr))
+print("rl tree lvl 2: " + str(dataset2rl))
+print("rr tree lvl 2: " + str(dataset2rr)) # pure node -> no split needed!
 
-dataset_size2ll = len(dataset2ll[0])
-gini2ll = 1 - math.pow(dataset2ll[3].count(z1) / dataset_size2ll, 2) - math.pow(dataset2ll[3].count(z2) / dataset_size2ll, 2) \
-         - math.pow(dataset2ll[3].count(z3) / dataset_size2ll, 2)
-print("gini 2ll: " + str(gini2ll))
+dataset_size2rl = len(dataset2rl[0])
+gini2ll = 1 - math.pow(dataset2rl[3].count(z1) / dataset_size2rl, 2) - math.pow(dataset2rl[3].count(z2) / dataset_size2rl, 2) \
+         - math.pow(dataset2rl[3].count(z3) / dataset_size2rl, 2)
+print("gini 2rl: " + str(gini2ll))
 
-dataset_size2lr = len(dataset2lr[0])
-gini2lr = 1 - math.pow(dataset2lr[3].count(z1) / dataset_size2lr, 2) - math.pow(dataset2lr[3].count(z2) / dataset_size2lr, 2) \
-          - math.pow(dataset2lr[3].count(z3) / dataset_size2lr, 2)
-print("gini 2lr: " + str(gini2lr))
+dataset_size2rr = len(dataset2rr[0])
+gini2lr = 1 - math.pow(dataset2rr[3].count(z1) / dataset_size2rr, 2) - math.pow(dataset2rr[3].count(z2) / dataset_size2rr, 2) \
+          - math.pow(dataset2rr[3].count(z3) / dataset_size2rr, 2)
+print("gini 2rr: " + str(gini2lr))
