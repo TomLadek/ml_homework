@@ -46,9 +46,9 @@
 % However, you each must submit individually - (it may be same file)
 % ------------------------------------------------------------------------------
 
-\newcommand{\names}{Tomas Ladek} %
-\newcommand{\imats}{3602673} %
-\newcommand{\emails}{tom.ladek@tum.de} %
+\newcommand{\names}{Tomas Ladek, Michael Kratzer} %
+\newcommand{\imats}{3602673, } %
+\newcommand{\emails}{tom.ladek@tum.de, } %
 
 \begin{document}
 
@@ -62,6 +62,38 @@
 % ------------------------------------------------------------------------------
 
 \exercise
-siehe notizen von Michael \& wolfram alpha (second derivative theta^t*(1-theta)^h with theta=t/(t+h) )
+\begin{align*}
+	\dfrac{\partial}{\partial \theta}\theta^t (1-\theta)^h &= t \theta^{t-1} (1-\theta)^h - \theta^t h(1-\theta)^{h-1}\\
+	&= \theta^{t-1}(1-\theta)^{h-1}\big(t(1-\theta)-h\theta\big)
+\end{align*}
+
+\begin{align*}
+	\dfrac{\partial^2}{\partial \theta^2}\theta^t (1-\theta)^h &= \dfrac{\partial}{\partial \theta}\theta^{t-1}(1-\theta)^{h-1}\big(t(1-\theta)-h\theta\big)\\
+	 &= -2\,t\,h\,\theta^{t-1}(1-\theta)^{h-1} + t(t-1)\theta^{t-2}(1-\theta)^h + h(h-1)\theta^t(1-\theta)^{h-2}
+\end{align*}
+
+\begin{align*}
+	\dfrac{\partial}{\partial \theta}\log\theta^t (1-\theta)^h &= \dfrac{\partial}{\partial \theta}\big(t\log\theta + h\log(1-\theta)\big)\\
+	&= \dfrac{t}{\theta} - \dfrac{h}{1-\theta}
+\end{align*}
+
+\begin{align*}
+	\dfrac{\partial^2}{\partial \theta^2}\log\theta^t (1-\theta)^h &= \dfrac{\partial}{\partial \theta}(\dfrac{t}{\theta} - \dfrac{h}{1-\theta})\\
+	&= \dfrac{h}{(1-\theta)^2} - \dfrac{t}{\theta^2} 
+\end{align*}
+
+\exercise
+The local extremum of $\log f(\theta)$ can determined by setting the first derivative to zero, i.e.
+\begin{align*}
+	\dfrac{d}{d \theta}\log\big(f(\theta)\big) \stackrel{!}{=} 0
+\end{align*}
+Evaluating this with the logarithm derivative rule leads to 
+\begin{align*}
+	\dfrac{\dfrac{d}{d\theta}f(\theta)}{f(\theta)} = 0 &\iff \dfrac{d}{d\theta}f(\theta) = 0
+\end{align*}
+Which is also the formula for the extremum of a differentiable positive function $f(\theta)$. That means that taking the logarithm of a function preserves its extremum points (in particular its local maximum points).\\
+Considering the results from the first exercise, it can be easier to differentiate the logarithm of a function instead of the function itself, when one is interested only in the location of the maximum and not its value.
+
+\exercise
 
 \end{document}
