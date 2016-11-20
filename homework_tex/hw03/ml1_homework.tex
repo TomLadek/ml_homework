@@ -47,8 +47,8 @@
 % ------------------------------------------------------------------------------
 
 \newcommand{\names}{Tomas Ladek, Michael Kratzer} %
-\newcommand{\imats}{3602673, } %
-\newcommand{\emails}{tom.ladek@tum.de, } %
+\newcommand{\imats}{3602673, 3612903} %
+\newcommand{\emails}{tom.ladek@tum.de, mkratzer@mytum.de} %
 
 \begin{document}
 
@@ -95,5 +95,61 @@ Which is also the formula for the extremum of a differentiable positive function
 Considering the results from the first exercise, it can be easier to differentiate the logarithm of a function instead of the function itself, when one is interested only in the location of the maximum and not its value.
 
 \exercise
+$\theta_{MLE}$ is a special case of $\theta_{MAP}$ with the following prior:
+\begin{align*}
+	Beta(\theta|a,b) &= \dfrac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}\theta^{a-1}(1-\theta)^{b-1} \quad with\ a=b=1
+\end{align*}
+That way the posterior 
+\begin{align*}
+	p(\theta=x|\mathcal{D}) = \dfrac{p(\mathcal{D}|\theta=x) \cdot p(\theta=x)}{p(\mathcal{D})}
+\end{align*}
+simplifies to
+\begin{align*}
+	p(\theta=x|\mathcal{D}) &= \dfrac{1}{p(\mathcal{D})} \cdot x^{|T|} (1-x)^{|H|} \cdot \dfrac{\Gamma(1+1)}{\Gamma(1)\Gamma(1)} x^{0}(1-x)^{0} \\
+	&= \dfrac{1}{p(\mathcal{D})} \cdot x^{|T|} (1-x)^{|H|} \cdot \dfrac{1}{1 \cdot 1} \\
+	&= \dfrac{1}{p(\mathcal{D})} \cdot x^{|T|} (1-x)^{|H|} \\
+	&\propto x^{|T|} (1-x)^{|H|}
+\end{align*}
+which equals to the maximum likelihood estimate $\theta_{MLE}$. Another way of seeing this is by taking the formula for $\theta_{MAP}$ directly (from the slides):
+\begin{align*}
+	\theta_{MAP} &= \dfrac{|T| + a - 1}{|H| + |T| + a + b - 2} \stackrel{a=b=1}{=} \dfrac{|T| + 1 - 1}{|H| + |T| + 1 + 1 - 2} = \dfrac{|T|}{|H| + |T|} = \theta_{MLE}
+\end{align*}
+
+\exercise
+Given that the prior is Beta-distributed and the likelihood is Bin-distributed, the posterior distribution has to be Bin as well. The expected value of the posterior therefore has to be in the form $N\theta$.\\
+
+\noindent According to the hint, the posterior mean can be written as
+\begin{align*}
+	\mathbb{E}[\theta|\mathcal{D}] &= \lambda\mathbb{E}[\theta = x] + (1-\lambda)\theta_{MLE}
+\end{align*}
+The mean of the Beta-distributed prior $\mathbb{E}[\theta = x]$ is given by $\dfrac{a}{a+b}$ (lecture notes), the maximum likelihood estimate of a Bin-distribution is the maximum of the function $\binom{N}{m}\theta^m(1-\theta)^{N-m}$, which is $\lfloor(N+1)\theta\rfloor$ (since $\theta$ can take non-integer values between 0 and 1). Together:
+\begin{align*}
+\mathbb{E}[\theta|\mathcal{D}] &= \lambda\dfrac{a}{a+b} + (1-\lambda)\lfloor(N+1)\theta\rfloor
+\end{align*}
+\textbf{TODO} One can easily see, that with $\lambda = 0$ and some magic,
+\begin{align*}
+	\lambda\dfrac{a}{a+b} + (1-\lambda)\lfloor(N+1)\theta\rfloor = N\theta
+\end{align*}
+
+\exercise
+The Poisson PDF is given by $\dfrac{e^{-\lambda}\lambda^x}{x!}$. The maximum likelihood estimate for $\lambda$ can be found in this way:
+\begin{align*}
+	\dfrac{\partial}{\partial \lambda}\dfrac{e^{-\lambda}\lambda^x}{x!} &\stackrel{!}{=} 0\\
+	\Rightarrow \dfrac{e^{-\lambda}(x-\lambda)\lambda^{x-1}}{x!} &= 0\\
+	\iff (x-\lambda) &= 0\ (i.e.\ \lambda=x\ and\ x>0) \quad or\quad \lambda = 0
+\end{align*}
+\textbf{TODO} One can easily see that this estimate is unbiased.\\
+
+\noindent The posterior distribution given the Poisson likelihood and a Gamma prior looks as follows:
+\begin{align*}
+	p(\theta=x|\mathcal{D}) &= \dfrac{1}{p(\mathcal{D})} \cdot \dfrac{e^{-\lambda}\lambda^x}{x!} \cdot \dfrac{b^a}{\Gamma(a)}x^{a-1}e^{-bx} = \dfrac{b^a}{p(\mathcal{D})\Gamma(a)} \cdot \dfrac{e^{-\lambda-bx}\lambda^x x^{a-1}}{x!}
+\end{align*}
+The MAP for $\lambda$ can be computed this way (\textbf{TODO} correct?):
+\begin{align*}
+	\dfrac{\partial}{\partial \lambda}\Big(\dfrac{b^a}{p(\mathcal{D})\Gamma(a)} \cdot \dfrac{e^{-\lambda-bx}\lambda^x x^{a-1}}{x!}\Big) &\stackrel{!}{=} 0\\
+	\iff \dfrac{b^a}{p(\mathcal{D})\Gamma(a)} \cdot \Big(\dfrac{e^{-\lambda-bx} \lambda^{x-1} x^{a}}{x!} - \dfrac{e^{-\lambda-bx} \lambda^{x} x^{a-1}}{x!} \Big) &= 0\\
+	\iff \lambda&=x\ and\ x>0 \quad or\quad \lambda = 0
+\end{align*}
+
 
 \end{document}
