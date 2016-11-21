@@ -1,0 +1,14 @@
+Q1:
+To get around having to compute the inverse and determinant of the covariance matrix.
+
+Q2:
+That the shape will take a form of an ellipsoid.
+
+Q3:
+I don't know anything about this.
+
+Q4:
+The uniform distribution has the highest entropy only for discrete random variables. A continuous random variable can be interpreted as a composition of infinitely many discrete (and i.i.d.) random variables and by the central limit theorem, the composed RV is a Gaussian.
+
+Q5:
+The simple empirical mean / covariance.
