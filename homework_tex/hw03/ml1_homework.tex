@@ -126,25 +126,21 @@ The mean of the Beta-distributed prior $\mathbb{E}[\theta = x]$ is given by $\df
 \begin{align*}
 \mathbb{E}[\theta|\mathcal{D}] &= \lambda\dfrac{a}{a+b} + (1-\lambda)\lfloor(N+1)\theta\rfloor
 \end{align*}
-\textbf{TODO} One can easily see, that with $\lambda = 0$ and some magic,
-\begin{align*}
-	\lambda\dfrac{a}{a+b} + (1-\lambda)\lfloor(N+1)\theta\rfloor = N\theta
-\end{align*}
 
 \exercise
 The Poisson PDF is given by $\dfrac{e^{-\lambda}\lambda^x}{x!}$. The maximum likelihood estimate for $\lambda$ can be found in this way:
 \begin{align*}
 	\dfrac{\partial}{\partial \lambda}\dfrac{e^{-\lambda}\lambda^x}{x!} &\stackrel{!}{=} 0\\
 	\Rightarrow \dfrac{e^{-\lambda}(x-\lambda)\lambda^{x-1}}{x!} &= 0\\
-	\iff (x-\lambda) &= 0\ (i.e.\ \lambda=x\ and\ x>0) \quad or\quad \lambda = 0
+	\iff x = \lambda
 \end{align*}
-\textbf{TODO} One can easily see that this estimate is unbiased.\\
+For an estimate the bias has to be 0. The mean of the poisson distribution is $\lambda$ and the $\theta_{MLE}$ is also $\lambda$ so the difference is 0.
 
 \noindent The posterior distribution given the Poisson likelihood and a Gamma prior looks as follows:
 \begin{align*}
 	p(\theta=x|\mathcal{D}) &= \dfrac{1}{p(\mathcal{D})} \cdot \dfrac{e^{-\lambda}\lambda^x}{x!} \cdot \dfrac{b^a}{\Gamma(a)}x^{a-1}e^{-bx} = \dfrac{b^a}{p(\mathcal{D})\Gamma(a)} \cdot \dfrac{e^{-\lambda-bx}\lambda^x x^{a-1}}{x!}
 \end{align*}
-The MAP for $\lambda$ can be computed this way (\textbf{TODO} correct?):
+The MAP for $\lambda$ can be computed this way:
 \begin{align*}
 	\dfrac{\partial}{\partial \lambda}\Big(\dfrac{b^a}{p(\mathcal{D})\Gamma(a)} \cdot \dfrac{e^{-\lambda-bx}\lambda^x x^{a-1}}{x!}\Big) &\stackrel{!}{=} 0\\
 	\iff \dfrac{b^a}{p(\mathcal{D})\Gamma(a)} \cdot \Big(\dfrac{e^{-\lambda-bx} \lambda^{x-1} x^{a}}{x!} - \dfrac{e^{-\lambda-bx} \lambda^{x} x^{a-1}}{x!} \Big) &= 0\\
