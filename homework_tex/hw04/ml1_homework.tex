@@ -138,10 +138,53 @@ Just multiplying $U\Lambda U^{T}$ results in what should be proven.
 \end{align}
 
 \exercise
-HW2
+$L = \mathbb{R}^{nxn}$ and is invertible and $Y = LX$ with $X\sim \mathcal{N}(\mu_X,\Sigma_X)$
+then $X = L^{-1}Y$. So
+\begin{align}
+	p_Y(Y) = p_X(X) |det(\frac{\partial x}{\partial y})| = p_X(X) |det(J_{Y \rightarrow X})| = p_X(L^{-1}Y)|det(J_{Y\rightarrow X})|
+\end{align}
+with
+\begin{align}
+	J_{Y\rightarrow X} = \frac{\partial x}{\partial y} = \frac{\partial L^{-1}Y}{\partial Y} = L^{-1}
+\end{align}
+
+Then
+\begin{align}
+	p_y(Y) &= p_x(L^{-1}Y)|det(L^{-1}) \\
+	&= p_x(L^{-1}Y) \frac{1}{|det(L)|} \\
+	&= \frac{1}{\sqrt{(2\pi)^d|det(\Sigma_X|)}}exp(-\frac{1}{2}(L^{-1}Y-\mu_X)^T\Sigma_X^{-1}(L^{-1}Y-\mu_X)) \frac{1}{|det(L)|} \\
+	&= \frac{1}{\sqrt{(2\pi)^d|det(\Sigma_X|)}|det(L)|}exp(-\frac{1}{2}(L^{-1}Y-\mu_X)^T\Sigma_X^{-1}(L^{-1}Y-\mu_X)) \\
+	&=
+	\frac{1}{\sqrt{(2\pi)^d|det(\Sigma_X)||det(L)|^2}}exp(-\frac{1}{2}(L^{-1}Y-\mu_X)^T\Sigma_X^{-1}(L^{-1}Y-\mu_X)) \\
+	&=
+	\frac{1}{\sqrt{(2\pi)^d|det(\Sigma_X)||det(LL^T)|}}exp(-\frac{1}{2}(L^{-1}Y-\mu_X)^T\Sigma_X^{-1}(L^{-1}Y-\mu_X)) \\
+	&=
+	\frac{1}{\sqrt{(2\pi)^d|det(L\Sigma_XL^T)|}}exp(-\frac{1}{2}(L^{-1}Y-\mu_X)^T\Sigma_X^{-1}(L^{-1}Y-\mu_X)) \\
+	&=
+	\frac{1}{\sqrt{(2\pi)^d|det(L\Sigma_XL^T)|}}exp(-\frac{1}{2}(Y-L\mu_X)^T\Sigma_X^{-1}(Y-L\mu_X) \\
+	&=
+	\frac{1}{\sqrt{(2\pi)^d|det(L\Sigma_XL^T)|}}exp(-\frac{1}{2}L^{-1}(Y-L\mu_X)^T\Sigma_X^{-1}L^{-1}(Y-L\mu_X) \\
+	&=
+	\frac{1}{\sqrt{(2\pi)^d|det(L\Sigma_XL^T)|}}exp(-\frac{1}{2}(Y-L\mu_X)^TL^{-T}\Sigma_X^{-1}L^{-1}(Y-L\mu_X) \\
+	&=
+	\frac{1}{\sqrt{(2\pi)^d|det(L\Sigma_XL^T)|}}exp(-\frac{1}{2}(Y-L\mu_X)^T(L\Sigma_XL^T)^{-1}(Y-L\mu_X) \\
+	Y &\sim \mathcal{N}(L\mu_X, L\Sigma_XL^T) \\
+	Y &\sim \mathcal{N}(\mu_Y,\Sigma_Y)
+\end{align}
+
 
 \exercise
-HW3
+With $p(x) = \mathcal{N}(0, \Sigma_{X})$ and $Y = TX + Z$ with $Z \sim
+ \mathcal{N}(0, \Sigma_{Y|X}) $ then
+\begin{align}
+	\mu_Y &= E[TX+Z] = TE[X] + E[Z] = TE[X] \\
+	\Sigma_Y &= T \Sigma_XT^T + \Sigma_Z = T\Sigma_XT^T + \Sigma_{Y|X} \\
+					&= T\Sigma_XT^T + \Sigma_Y - \Sigma_{Y,X}\Sigma_{X}^{-1}\Sigma_{X,Y}
+\end{align}
+This means for T it must hold that
+\begin{align}
+	T\Sigma_XT^T = \Sigma_{Y,X}\Sigma_{X}^{-1}\Sigma_{X,Y}
+\end{align}
 
 \exercise
 HW4
