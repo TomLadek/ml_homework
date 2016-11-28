@@ -8,7 +8,7 @@ Q3:
 That the datapoint amount is rather low and the weight parameter variance could be high when regressing.
 
 Q4:
-Kernels help us calculate regression just with dual parameters (scale sub-exponentially with number of training samples) instead of weights of basis functions (scale expontentially with dimensions).
+Kernels help us calculate regression just with dual parameters (scale sub-exponentially with number of training samples) instead of weights of basis functions (scale exponentially with dimensions).
 
 Q5:
 The computation of eigenvalues and -vectors of the corresponding Gram matrix in order to check its positive semi-definiteness.
