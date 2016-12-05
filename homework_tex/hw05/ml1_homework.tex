@@ -94,4 +94,116 @@ By carefully choosing values of $T_n$, the error function can be made less sensi
 
 \exercise
 
+The following calculation assumes, that p is equal the the number of rows in the matrix \textbf{$\Phi$}. The normal least squares algorithm is defined as:
+\begin{align}
+	E_D(w) = \frac{1}{2} \sum^{N}[W^T\Phi(x_n)-z_n]^2= \frac{1}{2}(\textbf{$\Phi$}W-Z)^T(\textbf{$\Phi$}W-Z)
+\end{align}
+Augmenting the matrix and the vector by the given values leeds to:
+\begin{align}
+		\frac{1}{2} (
+		\begin{pmatrix}
+		\phi_0(X_1) & \dots & \phi_{m-1}(X_1) \\
+		\vdots & \ddots & \vdots \\
+		\phi_0(X_N) & \dots & \phi_{m-1}(X_N) \\
+		\sqrt{\lambda} & \dots & 0 \\
+		\vdots & \ddots & \vdots \\
+		0 & \dots & \sqrt{\lambda}		
+		\end{pmatrix}
+		\begin{pmatrix}
+		w_0 \\
+		\vdots \\
+		w_{m-1}
+		\end{pmatrix}
+		-
+		\begin{pmatrix}
+		z_0 \\
+		\vdots \\
+		z_{m-1} \\
+		0 \\
+		\vdots \\
+		0
+		\end{pmatrix} )^T
+				\begin{pmatrix}
+				\phi_0(X_1) & \dots & \phi_{m-1}(X_1) \\
+				\vdots & \ddots & \vdots \\
+				\phi_0(X_N) & \dots & \phi_{m-1}(X_N) \\
+				\sqrt{\lambda} & \dots & 0 \\
+				\vdots & \ddots & \vdots \\
+				0 & \dots & \sqrt{\lambda}		
+				\end{pmatrix}
+				\begin{pmatrix}
+				w_0 \\
+				\vdots \\
+				w_{m-1}
+				\end{pmatrix}
+				-
+				\begin{pmatrix}
+				z_0 \\
+				\vdots \\
+				z_{m-1} \\
+				0 \\
+				\vdots \\
+				0
+				\end{pmatrix} ) \\
+				= \frac{1}{2}
+				\begin{pmatrix}
+				w_0\phi_0(X_1) - z_0 + \dots + w_{m-1}\phi_{m-1}(X_1) - z_{m-1} \\
+				\vdots  \\
+				w_0\phi_0{X_N} - z_0 + \dots + w_{m-1}\phi_{m-1}(X_N) - z_{m-1} \\
+				\sqrt{\lambda}w_0 \\
+				\vdots  \\	
+				\sqrt{\lambda}w_{m-1}	
+				\end{pmatrix}^T
+				\begin{pmatrix}
+				w_0\phi_0(X_1) - z_0 + \dots + w_{m-1}\phi_{m-1}(X_1) - z_{m-1} \\
+				\vdots \\
+				w_0\phi_0{X_N} - z_0 + \dots + w_{m-1}\phi_{m-1}(X_N) - z_{m-1} \\
+				\sqrt{\lambda}w_0  \\
+				\vdots  \\	
+				\sqrt{\lambda}w_{m-1}	
+				\end{pmatrix} \\
+				= 
+				\frac{1}{2}(\sum^{N}[W^T\Phi(x_n)]^2 + \lambda w_0^2 + \dots + \lambda w_{m-1}^2) = \frac{1}{2}(\sum^{N}[W^T\Phi(x_n)]^2 + \lambda ||w||) = 
+				\frac{1}{2}\sum^{N}[W^T\Phi(x_n)]^2 + \frac{\lambda}{2} ||w|| = \widetilde{E}_D(w)
+\end{align}
+
+\exercise
+\begin{align}
+	p(W,\beta|Z,X) &\propto p(Z | X,W,\beta)p(W|\beta)p(\beta) \\
+	&= p(Z | X,W,\beta)p(W,\beta) \\
+	&= \prod_{n=1}^{N} \mathcal{N}(Z_n|W^T\phi(X_n),\beta^{-1}) \mathcal{N}(W|M_0,\beta^{-1}S_0)Gam(\beta|a_0,b_0)
+\end{align}
+
+\exercise
+With $y \sim \mathcal{N}(10,4)$, then $p(y>10) = 0.5$. 10 is exactly the expected value of the normal distribution. To show this easily we can transform the random variable to a standard gaussian distribution.
+\begin{align}
+Z = \frac{y - \mu}{\sigma} = \frac{y - 10}{2}
+\end{align}
+To get the probability for $y>10$ we just have to plug in 10 into the formular for Z and look ap the corresponding value in the cummulative table. This results in $p(y>10) = 0.5$
+
+\exercise
+Given $y \sim \mathcal{N}(5x + 10,4)$ and $x=1$, then $y \sim \mathcal{N}(15,4)$.
+Then the expected value of y is just 15.
+
+\exercise
+We just square the norm, which is ok because we are only interested in distances.
+\begin{align}
+	||x_1 - x_2||_2^2 &= <x_1 - x_2, x_1 - x_2> \\
+	&= (x_1 - x_2)^T(x_1 - x_2) \\
+	&= (x_1^T - x_2^T)(x_1 - x_2) \\
+	&= x_1^Tx_1 - x_1^Tx_2 - x_2^Tx_1 + x_2^Tx_2 \\
+	&= x_1^Tx_1 + x_2^Tx_2 - 2x_1^Tx_2
+\end{align}
+Using the kernel: $k(x_1,x_1) + k(x_2,x_2) - 2k(x_1,x_2)$
+
+\exercise
+\begin{align}
+	k(x_1, x_2) &= exp\{-\frac{1}{2} ||x_1 - x_2||^2\} \\
+	&= exp\{-\frac{1}{2} (x_1^Tx_1 + x_2^Tx_2 - 2x_1^Tx_2)\} \\
+	&= exp\{-\frac{1}{2} x_1^Tx_1\}exp\{-\frac{1}{2} x_2^Tx_2\}exp\{x_1^Tx_2\}\\
+	&= f(x_1)k(x_1, x_2)f(x_2)
+\end{align}
+with $f(x) = exp\{-\frac{1}{2}x^Tx\}$ and $k(x_1,x_2) = exp\{x_1^Tx_2 \}$.
+$f(x)$ is only a scalar and a kernel times a scalar is also a kernel. $x_1^Tx_2$ is the linear kernel. Also $exp\{ k(x_1, x_2)\}$ is also a kernel.
+
 \end{document}
