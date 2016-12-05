@@ -1,0 +1,17 @@
+Q1:
+So we can transform the input data into a space where the data is linearly separable.
+
+Q2:
+By using a suitable basis function, a dimension can be chosen in which the classes have maximum separation and separating them linearly will get easier.
+
+Q3:
+Because its output isn't a (set of) continuous variable(s), it's only the probability of a point being classified as a specific class.
+
+Q4:
+How sensitive it is to outliers in the data (both correct and incorrect).
+
+Q5:
+That it's not convex.
+
+Q6:
+To make predictions about the classification of data that is yet to be collected.
