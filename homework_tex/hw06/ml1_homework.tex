@@ -13,6 +13,7 @@
 \usepackage{listings}
 \usepackage[final]{pdfpages}
 \usepackage{pgfplots}
+\usepackage{pdfpages}
 
 \pgfplotsset{compat=1.7}
 
@@ -191,29 +192,30 @@ The classifier with some possible parameters is therefore:
 
 \pagebreak
 
-\exercise
-\begin{lstlisting}[language=Python]
-	def pred(X, W, b):    
-	    c = np.add(b, np.dot(X, W.transpose()))
-	    
-	    if np.isscalar(c):
-	        c = np.array([c])
+%\exercise
+%\begin{lstlisting}[language=Python]
+%	def pred(X, W, b):    
+%	    c = np.add(b, np.dot(X, W.transpose()))
+%	    
+%	    if np.isscalar(c):
+%	        c = np.array([c])
 		
-	    for x in np.nditer(c, op_flags=['readwrite']):
-		    # transform each position with 1 / (1 + exp(-a))
-		    x[...] = 1 / (1 + np.exp(-1 * x))
+%	    for x in np.nditer(c, op_flags=['readwrite']):
+%		    # transform each position with 1 / (1 + exp(-a))
+%		    x[...] = 1 / (1 + np.exp(-1 * x))
 		
-	    return np.reshape(c, (X.shape[0],1))
-\end{lstlisting}
+%	    return np.reshape(c, (X.shape[0],1))
+%\end{lstlisting}
 
 \exercise
-\begin{lstlisting}[language=Python]
-	def loglikelihood(X, Z, W, b):    
-	    error = 0
-	    for i in range(X.shape[0]):
-		    error += Z[i] * np.log(pred(np.array([X[i]]), W, b))
-	                  + (1 - Z[i]) * np.log(1 - pred(np.array([X[i]]), W, b))    
-	    return error
-\end{lstlisting}
+\includepdf[pages=-]{LinearClassification.pdf} 
+
+%\begin{lstlisting}[language=Python]
+%	    error = 0
+%	    for i in range(X.shape[0]):
+%		    error += Z[i] * np.log(pred(np.array([X[i]]), W, b))
+%	                  + (1 - Z[i]) * np.log(1 - pred(np.array([X[i]]), W, b))    
+%	    return error
+%\end{lstlisting}
 
 \end{document}
