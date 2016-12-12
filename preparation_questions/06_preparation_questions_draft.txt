@@ -1,0 +1,23 @@
+Q1:
+As in linear regression / classification, the basis functions are used to learn the process behind the distribution of the data.
+
+Q2:
+The amount of hidden layers.
+
+Q3:
+In the case when the NN is used for classification.
+
+Q4:
+By propagating the residual from the output to the hidden layer(s) below.
+
+Q5:
+Stochastic:
++ No further separation of training data needed.
+- Costly: weight adaptation for each sample separately.
+
+Batch:
++ Efficiency
+- Selection of mini-batch must be done right (randomly)
+
+Q6:
+Around update 50, before the validation error starts increasing much. Although the error on the training set still decreases, one is running the risk of overfitting.
