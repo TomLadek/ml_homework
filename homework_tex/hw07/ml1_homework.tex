@@ -69,9 +69,9 @@ Let us rewrite the sigmoid activation function as
 \begin{align*}
 	\sigma(x) &= \dfrac{1}{1 + e^{-x}} = \dfrac{e^x}{e^x (1 + e^{-x})} = \dfrac{e^x}{e^x + e^{x-x}} = \dfrac{e^x}{e^x + 1}
 \end{align*}
-There exists a network that computes $\sigma(x)$ by scaling and offsetting the hyperbolic tangent function $tanh(x)$, since
+There exists a network that computes $\sigma(x)$ by scaling and offsetting the hyperbolic tangent function $\tanh(x)$, since
 \begin{align*}
-	tanh(x) &= \dfrac{e^x - e^{-x}}{e^x + e^{-x}} \\
+	\tanh(x) &= \dfrac{e^x - e^{-x}}{e^x + e^{-x}} \\
 	&= \dfrac{e^{-x} (e^{2x} - 1)}{e^{-x} (e^{2x} + 1)} \\
 	&= \dfrac{e^{2x} - 1}{e^{2x} + 1} \\
 	&= \dfrac{2e^{2x} - (1 + e^{2x})}{e^{2x} + 1} \\
@@ -81,10 +81,22 @@ There exists a network that computes $\sigma(x)$ by scaling and offsetting the h
 \end{align*}
 And therefore
 \begin{align*}
-	tanh(x) &= 2 \sigma(2x) - 1\\
-	tanh(x) + 1 &= 2 \sigma(2x)\\
-	\dfrac{1}{2} (tanh(x) + 1) &= \sigma(2x)\\
-	\dfrac{1}{2} (tanh(\dfrac{z}{2}) + 1) &= \sigma(z) \quad\quad with\ z = 2x	
+	\tanh(x) &= 2 \sigma(2x) - 1\\
+	\tanh(x) + 1 &= 2 \sigma(2x)\\
+	\dfrac{1}{2} (\tanh(x) + 1) &= \sigma(2x)\\
+	\dfrac{1}{2} (\tanh(\dfrac{z}{2}) + 1) &= \sigma(z) \quad\quad with\ z = 2x	
+\end{align*}
+
+\exercise
+\begin{align*}
+	\dfrac{d}{dx}\ \sigma(x) &= \dfrac{d}{dx}\ \dfrac{1}{1 + e^{-x}} = \dfrac{d}{dx}\ (1 + e^{-x})^{-1} = - (1 + e^{-x})^{-2} \cdot (-e^{-x})\\
+	&= \dfrac{e^{-x}}{(1 + e^{-x})^2} = e^{-x} \Big(\dfrac{1}{1 + e^{-x}}\Big)^2 = e^{-x} \sigma^2(x)
+\end{align*}
+
+\begin{align*}
+	\dfrac{d}{dx}\ \tanh(x) &= \dfrac{d}{dx}\ \dfrac{e^x - e^{-x}}{e^x + e^{-x}} 
+	= \dfrac{(e^x + e^{-x})(e^x + e^{-x}) - (e^x - e^{-x})(e^x - e^{-x})}{(e^x + e^{-x})^2}\\
+	&= \dfrac{(e^x + e^{-x})^2 - (e^x - e^{-x})^2}{(e^x + e^{-x})^2} = 1 - \Big(\dfrac{e^x - e^{-x}}{e^x + e^{-x}}\Big)^2 = 1 - \tanh^2(x)
 \end{align*}
 
 \end{document}
