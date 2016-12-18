@@ -89,8 +89,10 @@ And therefore
 
 \exercise
 \begin{align*}
-	\dfrac{d}{dx}\ \sigma(x) &= \dfrac{d}{dx}\ \dfrac{1}{1 + e^{-x}} = \dfrac{d}{dx}\ (1 + e^{-x})^{-1} = - (1 + e^{-x})^{-2} \cdot (-e^{-x})\\
-	&= \dfrac{e^{-x}}{(1 + e^{-x})^2} = e^{-x} \Big(\dfrac{1}{1 + e^{-x}}\Big)^2 = e^{-x} \sigma^2(x)
+	\dfrac{d}{dx}\ \sigma(x) = \dfrac{d}{dx}\ \dfrac{e^x}{e^x + 1} &= \dfrac{(e^x + 1) e^x - e^x e^x}{(e^x + 1)^2}\\
+	&= \dfrac{(e^{x} + 1)e^x}{(e^x + 1)^2} - \dfrac{(e^{x})^2}{(e^x + 1)^2}\\
+	&= \dfrac{e^x}{e^x + 1} - \Big(\dfrac{e^x}{e^x + 1}\Big)^2\\
+	&= \sigma(x) - \sigma^2(x)
 \end{align*}
 
 \begin{align*}
