@@ -13,6 +13,7 @@
 \usepackage{listings}
 \usepackage[final]{pdfpages}
 \usepackage{pgfplots}
+\usepackage{float}
 
 \pgfplotsset{compat=1.7}
 
@@ -100,5 +101,47 @@ And therefore
 	= \dfrac{(e^x + e^{-x})(e^x + e^{-x}) - (e^x - e^{-x})(e^x - e^{-x})}{(e^x + e^{-x})^2}\\
 	&= \dfrac{(e^x + e^{-x})^2 - (e^x - e^{-x})^2}{(e^x + e^{-x})^2} = 1 - \Big(\dfrac{e^x - e^{-x}}{e^x + e^{-x}}\Big)^2 = 1 - \tanh^2(x)
 \end{align*}
+
+\exercise
+Below six plots of the training curves for different learning rates used in \texttt{mlp\_xor.NeuralNetwork(X,y,l)} and \texttt{mlp\_sin.NeuralNetwork(X,y,l)} respectively.
+\section*{mlp\_xor.NeuralNetwork(X,y,l):}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{xor_lr03}
+	\caption{Function: XOR, Learning rate 0.3}
+	\label{fig:xorlr03}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{xor_lr06}
+	\caption{Function: XOR, Learning rate 0.6}
+	\label{fig:xorlr06}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{xor_lr005}
+	\caption{Function: XOR, Learning rate 0.05}
+	\label{fig:xorlr005}
+\end{figure}
+
+\section*{mlp\_sin.NeuralNetwork(X,y,l):}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{sin_lr03}
+	\caption{Function: Sin, Learning rate 0.3}
+	\label{fig:sinlr03}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{sin_lr07}
+	\caption{Function: Sin, Learning rate 0.7}
+	\label{fig:sinlr07}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{sin_lr005}
+	\caption{Function: Sin, Learning rate 0.05}
+	\label{fig:sinlr005}
+\end{figure}
 
 \end{document}
