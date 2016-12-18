@@ -70,7 +70,7 @@ Let us rewrite the sigmoid activation function as
 \begin{align*}
 	\sigma(x) &= \dfrac{1}{1 + e^{-x}} = \dfrac{e^x}{e^x (1 + e^{-x})} = \dfrac{e^x}{e^x + e^{x-x}} = \dfrac{e^x}{e^x + 1}
 \end{align*}
-There exists a network that computes $\sigma(x)$ by scaling and offsetting the hyperbolic tangent function $\tanh(x)$, since
+A neural network with the hyperbolic tangent function $\tanh(x)$ as activation function is equivalent to one with activation function $\sigma(x)$, because the output of the former can be emulated through weights by scaling and offsetting the in- and output of the latter, since
 \begin{align*}
 	\tanh(x) &= \dfrac{e^x - e^{-x}}{e^x + e^{-x}} \\
 	&= \dfrac{e^{-x} (e^{2x} - 1)}{e^{-x} (e^{2x} + 1)} \\
