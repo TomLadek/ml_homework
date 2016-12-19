@@ -106,7 +106,22 @@ And therefore
 \#trivial
 
 \exercise
-\#trivial
+With the Laplacian distribution given as
+\begin{align}
+	p(\textbf{z} | \textbf{x},\textbf{w},\beta) = \prod_{n=1}^N p(z_n | x_n, \textbf{w}, \beta) = \prod_{n=1}^{N}\frac{1}{2\beta}exp(-\frac{|z_n-y(x_n, \textbf{w})|}{\beta})
+\end{align}
+Then the Log-Likelihood is
+\begin{align}
+	-ln(\prod_{n=1}^{N} p(z_n | x_n, \textbf{w}, \beta)) &= -\sum_{n=1}^{N} ln(p(z_n | x_n, \textbf{w}, \beta)) \\
+	&= -\sum_{n=1}^{N} ln(\frac{1}{2\beta}exp(-\frac{|z_n - y(x_n, \textbf{w})|}{\beta})) \\
+	&= -\sum_{n=1}^{N} ln(\frac{1}{2\beta}) - \frac{|z_n - y(x_n, \textbf{w})|}{\beta} \\
+	&= -Nln(\frac{1}{2\beta}) + \frac{1}{\beta}\sum_{n=1}^{N}|z_n - y(x_n, \textbf{w})|
+\end{align}
+Scaling likelihood by a constant only changes height, not location with respect to w. So we can set $\beta to 1$ and get constant plus the summed absolute errors.
+\begin{align}
+	-Nln(\frac{1}{2}) + \sum_{n=1}^{N}|z_n - y(x_n, \textbf{w})|
+\end{align}
+So deriving this term with respect to w is the same as deriving the summed absolute errors.
 
 \exercise
 Below six plots of the training curves for different learning rates used in \texttt{mlp\_xor.NeuralNetwork(X,y,l)} and \texttt{mlp\_sin.NeuralNetwork(X,y,l)} respectively.
@@ -151,9 +166,8 @@ Below six plots of the training curves for different learning rates used in \tex
 \end{figure}
 
 \exercise
-\#goodquestion
+The last input is always one because it represents the bias.
 
 \exercise
-\#goodquestion
-
+The implementation models the XOR problem in 2D space. So our decision boundary is a line in 2D space, which makes it impossible to seperate the 2 classes.
 \end{document}
