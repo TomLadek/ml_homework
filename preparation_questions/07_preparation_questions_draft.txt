@@ -1,0 +1,14 @@
+Q1:
+It's the same number as the amount of input neurons.
+
+Q2:
+We're interested in a compact representation (or dimensionality reduction) of the input data.
+
+Q3:
+SVD works only when the loss function is strictly convex, which isn't the case in general.
+
+Q4:
+It speeds up learning by 'remembering' the gradients at past points and adding them (partly) to the current value of search direction.
+
+Q5:
+It can lead to numerically unstable learning, since the gradient in one direction is almost flat, while being steep in the perpendicular dir
