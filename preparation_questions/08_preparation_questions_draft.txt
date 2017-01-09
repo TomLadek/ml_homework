@@ -1,0 +1,11 @@
+Q1:
+Generally there is no data for a better guess and also m(x) = 0 can be achieved anyway by normalizing the data.
+
+Q2:
+K (rather than K^-1) has an intuitive interpretation: how similar two inputs are (and therefore also their function values).
+
+Q3:
+The covariance matrix grows quadratically with the number of inputs and inverting large matrices is costly. Also data storage.
+
+Q4:
+Large scale length. It increases the influence of nearby points so the possible function value space gets narrower -> overfitting.
