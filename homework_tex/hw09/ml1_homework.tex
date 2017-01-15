@@ -164,8 +164,46 @@ Therefore
 		0.88 & 1 & 0.88 & 1 & 1 & 1\\
 		1 & 0.61 & 1 & 0.61 & 1 & 1
 	\end{pmatrix}
-	\Big)\\
+	\Big)
 \end{align*}
 
+\exercise
+?
+
+\exercise
+The joint distribution in the noisy case is given by
+\begin{align*}
+	\Big[
+	\begin{matrix}
+		\boldsymbol{y}\\
+		f_*
+	\end{matrix}
+	\Big]
+	\sim \mathcal{N} \Big(\Big[
+	\begin{matrix}
+		\mu\\
+		\mu_*
+	\end{matrix}
+	\Big], \Big[
+	\begin{matrix}
+		\boldsymbol{K} + \sigma^2_n \boldsymbol{I} & \boldsymbol{K}_* \\
+		\boldsymbol{K}^T_* & \boldsymbol{K}_{**}
+	\end{matrix}
+	\Big]
+	\Big)
+\end{align*}
+which in our case evaluates to
+\begin{align*}
+	\mathcal N \Big(0,
+	\begin{pmatrix}
+		0.88 + \sigma^2_1 & 0.78 & 1	& 1	& 0.88 & 1\\
+		0.78 & 0.61 + \sigma^2_2 & 1 & 1 & 1 & 0.61\\
+		1 & 1 & 0.88 + \sigma^2_1 & 0.78 & 0.88 & 1\\
+		1 & 1 & 0.78 & 0.61 + \sigma^2_2 & 1 & 0.61\\
+		0.88 & 1 & 0.88 & 1 & 1 & 1\\
+		1 & 0.61 & 1 & 0.61 & 1 & 1
+	\end{pmatrix}
+	\Big)
+\end{align*}
 
 \end{document}
