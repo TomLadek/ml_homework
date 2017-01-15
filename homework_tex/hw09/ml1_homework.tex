@@ -62,7 +62,22 @@
 % ------------------------------------------------------------------------------
 
 \exercise
-Noise-free: $m(x_*) = 0 = \mu_*$
+Let us transform the row vectors of \cal{X} to column vectors so that we can input them directly into the covariance function:
+\begin{align*}
+	x_1 &= 
+	\begin{pmatrix}
+	0 \\
+	1
+	\end{pmatrix}\\
+	x_2 &=
+	\begin{pmatrix}
+	0.5 \\
+	2
+	\end{pmatrix}
+\end{align*}
+
+
+\noindent Noise-free case means mean is zero: $m(x_*) = 0 = \mu_*$. Then:
 \begin{align*}
 	K &= exp\big(-\dfrac{1}{2}(x - x')^T (x - x')\big)\\	
 	  &= exp\big(-\dfrac{1}{2}
@@ -77,28 +92,28 @@ Noise-free: $m(x_*) = 0 = \mu_*$
 	  \big)\\	  
 	  &= exp\big(-\dfrac{1}{2}
 	  \begin{pmatrix}
-		  0 & 0 & -0.5 & -1 \\
-		  0.5 & 1 & 0 & 0
+		  0 & -0.5 \\
+		  0 & -1 \\
+		  0.5 & 0 \\
+		  1 & 0
 	  \end{pmatrix}^T 
 	  \begin{pmatrix}
-		  0 & 0 & -0.5 & -1 \\
-		  0.5 & 1 & 0 & 0
+		  0 & -0.5 \\
+		  0 & -1 \\
+		  0.5 & 0 \\
+		  1 & 0
 	  \end{pmatrix}
 	  \big)\\	  
 	  &= exp\big(-\dfrac{1}{2}
 	  \begin{pmatrix}
-		  0.25 & 0.5 &  &  \\
-		  0.5 & 1 & \multicolumn{2}{c}{\smash{\raisebox{.5\normalbaselineskip}{0}}} \\
-		  & & 0.25 & 0.5 \\
-		  \multicolumn{2}{c}{\smash{\raisebox{.5\normalbaselineskip}{0}}} & 0.5 & 1
+		  1.25 & 0 \\
+		  0 & 1.25
 	  \end{pmatrix}
 	  \big)\\	  
 	  &=
 	  \begin{pmatrix}
-		  0.88 & 0.78 &  &  \\
-		  0.78 & 0.61 & \multicolumn{2}{c}{\smash{\raisebox{0.5\normalbaselineskip}{1}}} \\
-		  & & 0.88 & 0.78 \\
-		  \multicolumn{2}{c}{\smash{\raisebox{.5\normalbaselineskip}{1}}} & 0.78 & 0.61
+		  0.54 & 1 \\
+		  1 & 0.54		  
 	  \end{pmatrix}
 \end{align*}
 
@@ -157,12 +172,10 @@ Therefore
 	\Big]\Big)
 	= \mathcal N \Big(0,
 	\begin{pmatrix}
-		0.88 & 0.78 & 1	& 1	& 0.88 & 1\\
-		0.78 & 0.61 & 1 & 1 & 1 & 0.61\\
-		1 & 1 & 0.88 & 0.78 & 0.88 & 1\\
-		1 & 1 & 0.78 & 0.61 & 1 & 0.61\\
-		0.88 & 1 & 0.88 & 1 & 1 & 1\\
-		1 & 0.61 & 1 & 0.61 & 1 & 1
+		0.54 & 1 & 0.88 & 1\\
+		1 & 0.54 & 1 & 0.61\\		
+		0.88 & 1 & 1 & 1\\
+		1 & 0.61 & 1 & 1
 	\end{pmatrix}
 	\Big)
 \end{align*}
@@ -196,12 +209,10 @@ which in our case evaluates to
 \begin{align*}
 	\mathcal N \Big(0,
 	\begin{pmatrix}
-		0.88 + \sigma^2_1 & 0.78 & 1	& 1	& 0.88 & 1\\
-		0.78 & 0.61 + \sigma^2_2 & 1 & 1 & 1 & 0.61\\
-		1 & 1 & 0.88 + \sigma^2_1 & 0.78 & 0.88 & 1\\
-		1 & 1 & 0.78 & 0.61 + \sigma^2_2 & 1 & 0.61\\
-		0.88 & 1 & 0.88 & 1 & 1 & 1\\
-		1 & 0.61 & 1 & 0.61 & 1 & 1
+		0.54 + \sigma^2_1 & 1 & 0.88 & 1\\
+		1 & 0.54 + \sigma^2_2 & 1 & 0.61\\		
+		0.88 & 1 & 1 & 1\\
+		1 & 0.61 & 1 & 1
 	\end{pmatrix}
 	\Big)
 \end{align*}
