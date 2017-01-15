@@ -79,7 +79,7 @@ Let us transform the row vectors of \cal{X} to column vectors so that we can inp
 
 \noindent Noise-free case means mean is zero: $m(x_*) = 0 = \mu_*$. Then:
 \begin{align*}
-	K &= exp\big(-\dfrac{1}{2}(x - x')^T (x - x')\big)\\	
+	\boldsymbol{K} &= exp\big(-\dfrac{1}{2}(x - x')^T (x - x')\big)\\	
 	  &= exp\big(-\dfrac{1}{2}
 	  \begin{pmatrix}
 		  x_1 - x_1 & x_1 - x_2 \\
@@ -118,7 +118,7 @@ Let us transform the row vectors of \cal{X} to column vectors so that we can inp
 \end{align*}
 
 \begin{align*}
-	K_* &= exp\big(-\dfrac{1}{2}
+	\boldsymbol{K_*} &= exp\big(-\dfrac{1}{2}
 	\begin{pmatrix}
 		x_1 - x_* \\
 		x_2 - x_*
@@ -152,7 +152,7 @@ Let us transform the row vectors of \cal{X} to column vectors so that we can inp
 \end{align*}
 
 \begin{align*}
-	K_{**} &= exp(-\dfrac{1}{2} (x_* - x_*)^T (x_* - x_*)) \\
+	\boldsymbol{K_{**}} &= exp(-\dfrac{1}{2} (x_* - x_*)^T (x_* - x_*)) \\
 		   &= exp(0) = 1
 \end{align*}
 
@@ -166,8 +166,8 @@ Therefore
 	\end{pmatrix}
 	\sim \mathcal N \Big(0, \Big[
 	\begin{matrix}
-	K & K_* \\
-	K^T_* & K_{**}
+		\boldsymbol{K} & \boldsymbol{K_*} \\
+		\boldsymbol{K_*^T} & \boldsymbol{K_{**}}
 	\end{matrix}
 	\Big]\Big)
 	= \mathcal N \Big(0,
