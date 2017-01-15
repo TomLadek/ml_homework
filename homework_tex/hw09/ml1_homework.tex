@@ -1,0 +1,171 @@
+\documentclass[11pt]{article}
+
+% ------------------------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% ------------------------------------------------------------------------------
+
+\usepackage[margin=.8in,top=1.1in,bottom=1.1in]{geometry} % page layout
+\usepackage{amsmath,amsthm,amssymb,amsfonts} % math things
+\usepackage{graphicx} % include graphics
+\usepackage{fancyhdr} % header customization
+\usepackage{titlesec} % help with section naming
+\usepackage{listings}
+\usepackage[final]{pdfpages}
+
+% naming sections
+\titleformat{\section}{\bf}{Problem \thesection}{0.5em}{}
+\newcommand{\exercise}{\section{}}
+
+% headers
+\pagestyle{fancy}
+\fancyhf{} % clear all
+\fancyhead[L]{\sffamily\small Machine Learning 1 --- Homework}
+\fancyhead[R]{\sffamily\small Page \thepage}
+\renewcommand{\headrulewidth}{0.2pt}
+\renewcommand{\footrulewidth}{0.2pt}
+\markright{\hrulefill\quad}
+
+\newcommand{\hwhead}[4]{
+\begin{center}
+\sffamily\large\bfseries Machine Learning Worksheet #1
+\vspace{2mm}
+\normalfont
+
+#2\\
+#3\\
+\texttt{#4}
+\end{center}
+\vspace{6mm} \hrule \vspace{4mm}
+}
+
+% ------------------------------------------------------------------------------
+% Start here -- Fill in your name, imat and email
+% (and the same for who you worked with)
+% You are allowed to work in groups of 2 (or 3 if there is no way around it)
+% However, you each must submit individually - (it may be same file)
+% ------------------------------------------------------------------------------
+
+\newcommand{\names}{Tomas Ladek, Michael Kratzer} %
+\newcommand{\imats}{3602673, 3612903} %
+\newcommand{\emails}{tom.ladek@tum.de, mkratzer@mytum.de} %
+
+\begin{document}
+
+% ------------------------------------------------------------------------------
+% Change xx (and only xx) to the current sheet number
+% ------------------------------------------------------------------------------
+\hwhead{9}{\names}{\imats}{\emails}
+
+% ------------------------------------------------------------------------------
+% Fill in your solutions
+% ------------------------------------------------------------------------------
+
+\exercise
+Noise-free: $m(x_*) = 0 = \mu_*$
+\begin{align*}
+	K &= exp\big(-\dfrac{1}{2}(x - x')^T (x - x')\big)\\	
+	  &= exp\big(-\dfrac{1}{2}
+	  \begin{pmatrix}
+		  x_1 - x_1 & x_1 - x_2 \\
+		  x_2 - x_1 & x_2 - x_2
+	  \end{pmatrix}^T 
+	  \begin{pmatrix}
+		  x_1 - x_1 & x_1 - x_2 \\
+		  x_2 - x_1 & x_2 - x_2
+	  \end{pmatrix}
+	  \big)\\	  
+	  &= exp\big(-\dfrac{1}{2}
+	  \begin{pmatrix}
+		  0 & 0 & -0.5 & -1 \\
+		  0.5 & 1 & 0 & 0
+	  \end{pmatrix}^T 
+	  \begin{pmatrix}
+		  0 & 0 & -0.5 & -1 \\
+		  0.5 & 1 & 0 & 0
+	  \end{pmatrix}
+	  \big)\\	  
+	  &= exp\big(-\dfrac{1}{2}
+	  \begin{pmatrix}
+		  0.25 & 0.5 &  &  \\
+		  0.5 & 1 & \multicolumn{2}{c}{\smash{\raisebox{.5\normalbaselineskip}{0}}} \\
+		  & & 0.25 & 0.5 \\
+		  \multicolumn{2}{c}{\smash{\raisebox{.5\normalbaselineskip}{0}}} & 0.5 & 1
+	  \end{pmatrix}
+	  \big)\\	  
+	  &=
+	  \begin{pmatrix}
+		  0.88 & 0.78 &  &  \\
+		  0.78 & 0.61 & \multicolumn{2}{c}{\smash{\raisebox{0.5\normalbaselineskip}{1}}} \\
+		  & & 0.88 & 0.78 \\
+		  \multicolumn{2}{c}{\smash{\raisebox{.5\normalbaselineskip}{1}}} & 0.78 & 0.61
+	  \end{pmatrix}
+\end{align*}
+
+\begin{align*}
+	K_* &= exp\big(-\dfrac{1}{2}
+	\begin{pmatrix}
+		x_1 - x_* \\
+		x_2 - x_*
+	\end{pmatrix}^T 
+	\begin{pmatrix}
+		x_1 - x_* \\
+		x_2 - x_*
+	\end{pmatrix}
+	\big)\\	
+	&= exp\big(-\dfrac{1}{2}
+	\begin{pmatrix}
+		-0.5 & 0\\
+		0 & 1
+	\end{pmatrix}^T 
+	\begin{pmatrix}
+		-0.5 & 0\\
+		0 & 1
+	\end{pmatrix}
+	\big)\\	
+	&= exp\big(-\dfrac{1}{2}
+	\begin{pmatrix}
+		0.25 & 0 \\
+		0 & 1
+	\end{pmatrix}
+	\big)\\	
+	&=
+	\begin{pmatrix}
+		0.88 & 1 \\
+		1 & 0.61
+	\end{pmatrix} = K^T_*
+\end{align*}
+
+\begin{align*}
+	K_{**} &= exp(-\dfrac{1}{2} (x_* - x_*)^T (x_* - x_*)) \\
+		   &= exp(0) = 1
+\end{align*}
+
+Therefore
+\begin{align*}
+	f_{jt} =
+	\begin{pmatrix}
+		y_1\\
+		y_2\\
+		f(x_*)
+	\end{pmatrix}
+	\sim \mathcal N \Big(0, \Big[
+	\begin{matrix}
+	K & K_* \\
+	K^T_* & K_{**}
+	\end{matrix}
+	\Big]\Big)
+	= \mathcal N \Big(0,
+	\begin{pmatrix}
+		0.88 & 0.78 & 1	& 1	& 0.88 & 1\\
+		0.78 & 0.61 & 1 & 1 & 1 & 0.61\\
+		1 & 1 & 0.88 & 0.78 & 0.88 & 1\\
+		1 & 1 & 0.78 & 0.61 & 1 & 0.61\\
+		0.88 & 1 & 0.88 & 1 & 1 & 1\\
+		1 & 0.61 & 1 & 0.61 & 1 & 1
+	\end{pmatrix}
+	\Big)\\
+\end{align*}
+
+
+\end{document}
