@@ -1,0 +1,8 @@
+Q1:
+Because an inversion of the generative model is needed, which can get hard with increasing model complexity, e.g. no closed-form solution.
+
+Q2:
+Reduction of noise in data features (dimensions) with little information.
+
+Q3:
+The universe collapses.
