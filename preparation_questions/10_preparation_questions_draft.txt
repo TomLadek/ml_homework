@@ -1,0 +1,14 @@
+Q1:
+EM needs some fixed posterior for the latent space which is then iteratively improved. In VAE, a NN learns the post. based only on the input
+
+Q2:
+A correct posterior makes data meaningless. Data can be recovered by sampling from the distribution of the latent variables. In other words, latent variables contain the true (essential) information.
+
+Q3:
+Convergence - does the algorithm result in a local/global optimum?
+Initialization - number of (hyper) parameters.
+Step size.
+
+Q4:
+In (i) the latent space contains only variations of pre-determined factors (i.e. digits 0-9, but no translation/rotation).
+(ii)'s latent space contains all combinations of all possible factors.
