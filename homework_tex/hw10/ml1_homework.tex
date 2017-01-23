@@ -65,9 +65,47 @@
 We don't know.
 
 \exercise
-We don't understand the question.
+\begin{align*}
+p(y) = \mathcal{N}(A\mu,A(WW^T+\psi)A^T)
+\end{align*}
+\paragraph{i)}
+With A and $\psi$ being diagonal, then $A(WW^T+\psi)A^T$ is also diagonal.
+\begin{align*}
+	A(WW^T+\psi)A^T &= AWW^TA^T + A\psi A^T \\
+	&= (AW)(AW)^T + A\psi A^T \\
+	&= \widetilde{W}\widetilde{W}^T + A\psi A^T \\
+	&= \widetilde{W}\widetilde{W}^T + \widetilde{\psi} 
+\end{align*}
+With $\widetilde{\psi}$ being diagonal.
 
+\paragraph{ii)}
+\begin{align*}
+	A(WW^T + \sigma^2I)A^T &= AWW^TA^T + A\sigma^2IA^T \\
+	&= (AW)(AW)^T + \sigma^2 AA^T \\
+	&= (AW)(AW)^T + \sigma^2I \\
+	&=  \widetilde{W}\widetilde{W}^T + \sigma^2I
+\end{align*}
 \exercise
-We don't understand the question.
-
+Given the solution for the posterior of the FA model: 
+\begin{align*}
+	\Sigma &= (I + W^T\psi^{-1}W)^{-1} \\
+	m_i &= \Sigma(W^T\psi^{-1}(x_i - \mu))
+\end{align*}
+then
+\begin{align*}
+	\Sigma &=(\Sigma_0^{-1}+W^T\psi^{-1}W)^{-1} \\
+	m_i &= \Sigma(W^T\psi^{-1}(x_i - \mu)+\Sigma_0^{-1}\mu_0)
+\end{align*}
+with $\psi= \sigma^2I$ and $\Sigma_0^{-1} = I$.
+\begin{align*}
+	\Sigma &= (I + W^T\frac{1}{\sigma^2}IW)^{-1} \\
+	&= (I + \frac{1}{\sigma^2}W^TW)^{-1} \\
+	&= (i + \frac{1}{\sigma^2}I)^{-1} \\
+	&= (diag(\frac{1}{\sigma^2}))^{-1} \\
+	&= \sigma^2I \\
+	m &= \sigma^2I(W^T\frac{1}{\sigma^2}I(x_i - \mu) + I\mu_0) \\
+	&= \sigma^2I(W^T\frac{1}{\sigma^2}I(x_i - \mu) + \sigma^2I\mu_0) \\
+	&= W^T(x_i-\mu)
+\end{align*}
+With $\sigma^2 \rightarrow 0$ it is an orthogonal projection.
 \end{document}
