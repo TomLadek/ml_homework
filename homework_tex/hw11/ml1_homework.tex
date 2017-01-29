@@ -121,4 +121,7 @@ With $\Sigma_1$ and $\Sigma_2$ being diagonal, this amounts to
 	KL(\mathcal{N}_1 || \mathcal{N}_2) &= \dfrac{1}{2} \Big(\sum_k \dfrac{\sigma_{1_k}}{\sigma_{2_k}} + (\mu_2 - \mu_1)^T \Sigma_2^{-1}(\mu_2 - \mu_1) - k + \ln\big(\prod_k \sigma_{2_k}{}\big) - \ln\big(\prod_k \sigma_{1_k}\big)\Big)
 \end{align*}
 
+\exercise
+When leaving out the KL term from $\mathcal{L}_{ELBO}$ one runs the risk of overfitting through divergence. The KL term punishes dissimilarity of the approximate and the true posterior, i.e. with unlucky initialization, maximizing $\mathbb{E}_{q(z)}$ alone could lead to $q(z)$ that, while fitting the data well, doesn't have anything to do with the true distribution of the data.
+
 \end{document}
