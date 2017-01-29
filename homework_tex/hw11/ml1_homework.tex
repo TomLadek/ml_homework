@@ -72,27 +72,40 @@ with some $\sigma \in \mathbb{R}$. Let us define $\pi_k = \dfrac{|C_k|}{N}$ with
 \begin{align*}
 	\arg \max_{\theta} \ln p(\mathcal{D}|\theta) = \sum_{n=1}^{N} \ln \sum_{k=0}^{K} \dfrac{|C_k|}{N} \mathcal{N}(x_n | \mu_k, \sigma^2 \boldsymbol{I})
 \end{align*}
-we use the EM algorithm, which consists of
+we use the EM algorithm. In EM, we are doing alternate coordinate ascent on $\mathcal{L}_{ELBO}(q, \theta)$ for some posterior distribution $q(z)$, i.e. two steps:
 \begin{enumerate}
-	\item Fixing the parameters of some posterior distribution and calculating responsibilities for a data point $x$.
-	\item Fixing responsibilities for a data point $x$ and optimizing the parameters of the underlying distribution.
+	\item Optimization w.r.t. $q$:
+	\begin{align*}
+		\arg \max_q \mathcal{L}_{ELBO}(q, \theta) &= \arg \max_q \mathbb{E}_{q(z)}[\ln p(x, z | \theta)] + \text{H}(q)
+	\end{align*}
+	With
+	\begin{align*}
+		\mathbb{E}_{q(z)}[\ln p(x, z | \theta)] &= \mathbb{E}_{q(z)}[\ln p(z | x, \theta)] + \mathbb{E}_{q(z)}[\ln p(x | \theta)]
+	\end{align*}
+	one arrives at
+	\begin{align*}
+		\arg \max_q \mathcal{L}_{ELBO}(q, \theta) &= \arg \max_q \big(\mathbb{E}_{q(z)}[\ln p(z | x, \theta)] + \mathbb{E}_{q(z)}[\ln p(x | \theta)] + \text{H}(q)\big)
+	\end{align*}
+
+	\item Optimization w.r.t. parameters $\theta$:
+	\begin{align*}
+	\arg \max_{\theta} \mathcal{L}_{ELBO}(q, \theta) &= \arg \max_{\theta} \big(\mathbb{E}_{q(z)}[\ln p(x, z | \theta)] + \text{H}(q)\big)\\
+	&= \arg \max_{\theta} \big(\mathbb{E}_{q(z)}[\ln p(x, z | \theta)]\big)\\
+	&= \arg \max_{\theta} \big(\mathbb{E}_{q(z)}[\ln p(z | x, \theta)] + \mathbb{E}_{q(z)}[\ln p(x | \theta)]\big)
+	\end{align*}
 \end{enumerate}
-Because the Euclidean metric puts equidistant points on a sphere (in 3D; on a circle in 2D, etc.), one can easily see how this metric can be implemented by employing a spherical Gaussian, i.e. one with a diagonal covariance matrix. The first step in the EM algorithm now is choosing some Gaussian means $\mu_k$ and calculating responsibilities by evaluating the Gaussian at $||x_n - \mu_k||_2$ for every data point $x_n$ - corresponds to the step ''Calculate clusters''. The second step of finding optimal parameters for the Gaussians then corresponds to ''recalibrating the cluster means'' with $\mu_k \leftarrow \dfrac{1}{|C_k|} \sum_{x \in C_k} x$.\\
 
-\noindent More formally:
+\noindent The \textit{K-Means algorithm} is an instance of the EM-algorithm. In the first step (E-Step), using
+\begin{align*}
+	p(z|x,\theta) &= r_{nk}(\theta) \sim \mathcal{N}(d(x_n, \mu_k) | \mu_k, \sigma^2 \boldsymbol{I})
+	\quad\quad \text{with}\quad d(x_n, \mu_k) = ||x_n - \mu_k||_2
+\end{align*}
+and taking $\sigma$ towards $0$, one can see that $\mathcal{L}_{ELBO}(q, \theta)$ is maximized by picking a $j$ for every $x_n$ such that $d(x_n, \mu_j)$ is minimized, which corresponds to the step of ''calculating clusters'' in \textit{K-Means}. [Euclidean distance puts equidistant points on a circle (2D) resp. sphere (3D), so does a Gaussian with $\Sigma = \sigma^2 \boldsymbol{I}$]\\
 
-%In EM, we are doing alternate coordinate ascent on $\mathcal{L}_{ELBO}(q, \theta)$ for some posterior distribution $q(z)$, i.e. two steps:
-%\begin{enumerate}
-%	\item Optimization w.r.t. $q$
-%	\begin{align*}
-%		\arg \max_q \mathcal{L}_{ELBO}(q, \theta) &= \arg \max_q \mathbb{E}_{q(z)}[\ln p(x, z | \theta)] + \text{H}(q)
-%	\end{align*}
-%	\item Optimization w.r.t. parameters $\theta$
-%	\begin{align*}
-%	\arg \max_{\theta} \mathcal{L}_{ELBO}(q, \theta) &= \arg \max_{\theta} \mathbb{E}_{q(z)}[\ln p(x, z | \theta)] + \text{H}(q)\\
-%	&= \arg \max_{\theta} \mathbb{E}_{q(z)}[\ln p(x, z | \theta)]
-%	\end{align*}
-%\end{enumerate}
-
+\noindent In the second step (M-step) the optimization of the arguments $\theta$ is done, namely the $\mu_k$ are updated as follows:
+\begin{align*}
+	\mu_k \leftarrow \dfrac{1}{|C_k|} \sum_{x \in C_k} x
+\end{align*}
+and thus maximizing $\mathcal{L}_{ELBO}(q, \theta)$, which corresponds to the step ''recalibrating the cluster mean''.
 
 \end{document}
