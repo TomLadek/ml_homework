@@ -114,11 +114,11 @@ and thus maximizing $\mathcal{L}_{ELBO}(q, \theta)$, which corresponds to the st
 \exercise
 The KL divergence for two Gaussian distributions of dimension $k$ is defined as follows:
 \begin{align*}
-	KL(\mathcal{N}_1 || \mathcal{N}_2) &= \dfrac{1}{2} \Big(\text{tr}(\Sigma_2^{-1}\Sigma_1) + (\mu_2 - \mu_1)^T \Sigma_1^{-1}(\mu_2 - \mu_1) - k + \ln\big(\dfrac{\det \Sigma_2}{\det \Sigma_1}\big)\Big)
+	KL(\mathcal{N}_1 || \mathcal{N}_2) &= \dfrac{1}{2} \Big(\text{tr}(\Sigma_2^{-1}\Sigma_1) + (\mu_2 - \mu_1)^T \Sigma_2^{-1}(\mu_2 - \mu_1) - k + \ln\big(\dfrac{\det \Sigma_2}{\det \Sigma_1}\big)\Big)
 \end{align*}
 With $\Sigma_1$ and $\Sigma_2$ being diagonal, this amounts to
 \begin{align*}
-	KL(\mathcal{N}_1 || \mathcal{N}_2) &= \dfrac{1}{2} \Big(\sum_k \dfrac{\sigma_{1_k}}{\sigma_{2_k}} + (\mu_2 - \mu_1)^T \Sigma_1^{-1}(\mu_2 - \mu_1) - k + \ln\big(\prod_k \sigma_{2_k}{}\big) - \ln\big(\prod_k \sigma_{1_k}\big)\Big)
+	KL(\mathcal{N}_1 || \mathcal{N}_2) &= \dfrac{1}{2} \Big(\sum_k \dfrac{\sigma_{1_k}}{\sigma_{2_k}} + (\mu_2 - \mu_1)^T \Sigma_2^{-1}(\mu_2 - \mu_1) - k + \ln\big(\prod_k \sigma_{2_k}{}\big) - \ln\big(\prod_k \sigma_{1_k}\big)\Big)
 \end{align*}
 
 \end{document}
